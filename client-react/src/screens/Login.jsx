@@ -35,7 +35,7 @@ const Login = ({ history }) => {
     authenticate(response, () => {
       isAuth() && isAuth().role === 'admin'
         ? history.push('/admin')
-        : history.push('/private');
+        : history.push('/');
     });
   };
 
@@ -54,6 +54,7 @@ const Login = ({ history }) => {
       });
   };
   const responseGoogle = response => {
+    console.log("helllo from response google");
     console.log(response);
     sendGoogleToken(response.tokenId);
   };
@@ -83,7 +84,7 @@ const Login = ({ history }) => {
             });
             isAuth() && isAuth().role === 'admin'
               ? history.push('/admin')
-              : history.push('/private');
+              : history.push('/');
             toast.success(`Hey ${res.data.user.name}, Welcome back!`);
           });
         })

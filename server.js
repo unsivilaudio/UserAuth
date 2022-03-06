@@ -16,6 +16,7 @@ connectDB();
 
 // body parser
 app.use(bodyParser.json())
+
 // Load routes
 const authRouter = require('./routes/auth.route')
 const userRouter = require('./routes/user.route')
@@ -39,8 +40,12 @@ app.use((req, res) => {
     })
 })
 
+
+
+
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
+

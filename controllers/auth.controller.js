@@ -6,12 +6,22 @@ const fetch = require('node-fetch');
 
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const expressJWT = require('express-jwt');
 const { errorHandler } = require('../helpers/dbErrorHandling');
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.MAIL_KEY);
+const nodemailer = require('nodemailer')
 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  secure: false,
+  auth : {
+      user: "dams74436@gmail.com",
+      pass: "playcold@123"
+  },
+  tls: {
+      rejectUnauthorized: false
+  }
 
+})
 
 exports.registerController = (req, res) => {
   const { name, email, password } = req.body;
@@ -41,7 +51,7 @@ exports.registerController = (req, res) => {
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
       {
-        expiresIn: '5m'
+        expiresIn: '1h'
       }
     );
 
@@ -58,19 +68,13 @@ exports.registerController = (req, res) => {
             `
     };
 
-    sgMail
-      .send(emailData)
-      .then(sent => {
-        return res.json({
-          message: `Email has been sent to ${email}`
-        });
-      })
-      .catch(err => {
-        return res.status(400).json({
-          success: false,
-          errors: errorHandler(err)
-        });
-      });
+    transporter.sendMail(emailData , function(err,info)  {
+      if(err){
+          console.log(err)
+          return;
+      }
+      console.log("Sent: " + info.response)
+  })
   }
 };
 
@@ -218,7 +222,7 @@ exports.forgotPasswordController = (req, res) => {
           },
           process.env.JWT_RESET_PASSWORD,
           {
-            expiresIn: '10m'
+            expiresIn: '1h'
           }
         );
 
@@ -247,20 +251,13 @@ exports.forgotPasswordController = (req, res) => {
                   'Database connection error on user password forgot request'
               });
             } else {
-              sgMail
-                .send(emailData)
-                .then(sent => {
-                  // console.log('SIGNUP EMAIL SENT', sent)
-                  return res.json({
-                    message: `Email has been sent to ${email}. Follow the instruction to activate your account`
-                  });
-                })
-                .catch(err => {
-                  // console.log('SIGNUP EMAIL SENT ERROR', err)
-                  return res.json({
-                    message: err.message
-                  });
-                });
+              transporter.sendMail(emailData , function(err,info)  {
+                if(err){
+                    console.log(err)
+                    return;
+                }
+                console.log("Sent: " + info.response)
+            })
             }
           }
         );
@@ -330,7 +327,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
 // Google Login
 exports.googleController = (req, res) => {
   const { idToken } = req.body;
-
+  console.log(idToken);
   client
     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT })
     .then(response => {
