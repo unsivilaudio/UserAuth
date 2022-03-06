@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
 import { isAuth } from '../helpers/auth';
 
 const AdminRoute = ({ component: Component, ...rest }) => (
@@ -9,15 +9,9 @@ const AdminRoute = ({ component: Component, ...rest }) => (
             isAuth() && isAuth().role === 'admin' ? (
                 <Component {...props} />
             ) : (
-                <Redirect
-                    to={{
-                        pathname: '/signin',
-                        state: { from: props.location }
-                    }}
-                />
+                <Navigate to='/signin' state={{ from: props.location }} />
             )
-        }
-    ></Route>
+        }></Route>
 );
 
 export default AdminRoute;

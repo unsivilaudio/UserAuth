@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { isAuth } from '../helpers/auth';;
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
+import { isAuth } from '../helpers/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -9,15 +9,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             isAuth() ? (
                 <Component {...props} />
             ) : (
-                <Redirect
-                    to={{
-                        pathname: '/login',
-                        state: { from: props.location }
-                    }}
-                />
+                <Navigate to='/login' state={{ from: props.location }} />
             )
-        }
-    ></Route>
+        }></Route>
 );
 
 export default PrivateRoute;
