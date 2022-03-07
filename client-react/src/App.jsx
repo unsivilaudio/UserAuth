@@ -25,15 +25,20 @@ function App() {
                     stickyNav={<RightNavbar />}
                     content={
                         <Switch>
-                            <Route path='*' element={<main>NOT FOUND</main>} />
-                            <Route path='/' element={<Dashboard />} />
-                            <Route path='/usage' element={<Usage />} />
-                            <Route path='/plan' element={<Plan />} />
+                            <Route exact path='/usage' element={<Usage />} />
+                            <Route exact path='/plan' element={<Plan />} />
                             <Route
+                                exact
                                 path='/documentation'
                                 element={<Documentation />}
                             />
-                            <Route path='/invoices' element={<Invoices />} />
+                            <Route
+                                exact
+                                path='/invoices'
+                                element={<Invoices />}
+                            />
+                            <Route exact path='/' element={<Dashboard />} />
+                            <Route path='*' element={<main>NOT FOUND</main>} />
                         </Switch>
                     }
                 />

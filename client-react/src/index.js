@@ -24,12 +24,10 @@ import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route path='/' exact element={<App />}>
-                {/* <Route path = '/plan' element = {<Plan/>}/>
+            {/* <Route path = '/plan' element = {<Plan/>}/>
         <Route path = '/usage' element = {<Usage/>}/>
         <Route path = '/documentation' element = {<Documentation/>}/>
         <Route path = '/invoices' element = {<Invoices/>}/> */}
-            </Route>
             <Route path='/login' exact element={<Login />} />
             <Route path='/register' exact element={<Register />} />
             <Route
@@ -45,7 +43,7 @@ ReactDOM.render(
             <Route path='/users/activate/:token' exact render={<Activate />} />
             <Route path='/private' exact element={<Private />} />
             <Route path='/admin' exact element={<Admin />} />
-            <Route render={<Navigate to='/' />} />
+            <Route path='*' element={<App />} />
         </Switch>
     </BrowserRouter>,
     document.getElementById('root')

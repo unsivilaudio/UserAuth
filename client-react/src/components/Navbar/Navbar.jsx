@@ -54,7 +54,7 @@ const Navbar = () => {
     return (
         <div
             className={`${styles.navbar_container} ${
-                nav ? styles.navbar_mobile_active : undefined
+                nav ? styles.navbar_mobile_active : ''
             }`}>
             <nav className={nav ? undefined : styles.nav_small}>
                 {/* LOGO */}

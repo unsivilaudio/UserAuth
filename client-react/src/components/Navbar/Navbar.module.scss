@@ -7,8 +7,13 @@
     --color_nav_active_bg: rgb(15, 23, 42);
     --nav_width: 16rem;
 
+    position: fixed;
+    top: 0;
+    left: 0;
     background: var(--color_nav_bg);
     height: 100vh;
+    width: 5rem;
+    z-index: 25;
 
     padding: var(--padding-md) var(--padding-sm);
     transition: transform 300ms ease-in-out;
@@ -18,17 +23,17 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 12;
+        width: auto;
     }
 
-    @media screen and (max-width: 18rem) {
+    @media screen and (max-width: 30em) {
         width: 100vw;
     }
-}
 
-.navbar_mobile_active {
-    @media screen and (max-width: 1024px) {
-        transform: translateX(0);
+    &.navbar_mobile_active {
+        @media screen and (max-width: 1024px) {
+            transform: translateX(0);
+        }
     }
 }
 
